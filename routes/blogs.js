@@ -28,6 +28,10 @@ router.post("/", async (req, res) => {
     blog_text: req.body.blog_text,
     date_visited: req.body.date_visited,
     place_img: req.body.place_img,
+    location: {
+      lat: req.body.lat,
+      lng: req.body.lng
+    }
   });
 
   try {
