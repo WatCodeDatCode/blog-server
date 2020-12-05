@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 
 // Get single blog
 router.get("/:id", getBlog, (req, res) => {
-  res.json(res.blog)
+  res.json(res.blog);
 });
 
 // Create blog
@@ -30,8 +30,8 @@ router.post("/", async (req, res) => {
     place_img: req.body.place_img,
     location: {
       lat: req.body.lat,
-      lng: req.body.lng
-    }
+      lng: req.body.lng,
+    },
   });
 
   try {
@@ -44,26 +44,52 @@ router.post("/", async (req, res) => {
 
 // Update blog
 router.patch("/:id", getBlog, async (req, res) => {
-    if (req.body.title != null) {
-        res.blog.title = req.body.title
-    }
-    try {
-        const updatedBlog = await res.blog.save()
-        res.json(updatedBlog)
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-
-    }
+  if (req.body.title != null) {
+    res.blog.title = req.body.title;
+  }
+  if (req.body.city != null) {
+    res.blog.city = req.body.city;
+  }
+  if (req.body.country != null) {
+    res.blog.country = req.body.country;
+  }
+  if (req.body.author != null) {
+    res.blog.author = req.body.author_img;
+  }
+  if (req.body.author_img != null) {
+    res.blog.author_img = req.body.author_img;
+  }
+  if (req.body.blog_text != null) {
+    res.blog.blog_text = req.body.blog_text;
+  }
+  if (req.body.date_visited != null) {
+    res.blog.date_visited = req.body.date_visited;
+  }
+  if (req.body.place_img != null) {
+    res.blog.place_img = req.body.place_img;
+  }
+  if (req.body.lat != null) {
+    res.blog.location.lat = req.body.lat;
+  }
+  if (req.body.lng != null) {
+    res.blog.location.lng = req.body.lng;
+  }
+  try {
+    const updatedBlog = await res.blog.save();
+    res.json(updatedBlog);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
 
 // Delete blog
 router.delete("/:id", getBlog, async (req, res) => {
-    try {
-        await res.blog.remove()
-        res.json({ message: 'Blog entry deleted'})
-    } catch (err) {
-        res.status(500).json({ message: err.message})
-    }
+  try {
+    await res.blog.remove();
+    res.json({ message: "Blog entry deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 async function getBlog(req, res, next) {
