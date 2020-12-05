@@ -43,42 +43,14 @@ router.post("/", async (req, res) => {
 });
 
 // Update blog
-router.patch("/:id", getBlog, async (req, res) => {
-  if (req.body.title != null) {
-    res.blog.title = req.body.title;
-  }
-  if (req.body.city != null) {
-    res.blog.city = req.body.city;
-  }
-  if (req.body.country != null) {
-    res.blog.country = req.body.country;
-  }
-  if (req.body.author != null) {
-    res.blog.author = req.body.author_img;
-  }
-  if (req.body.author_img != null) {
-    res.blog.author_img = req.body.author_img;
-  }
-  if (req.body.blog_text != null) {
-    res.blog.blog_text = req.body.blog_text;
-  }
-  if (req.body.date_visited != null) {
-    res.blog.date_visited = req.body.date_visited;
-  }
-  if (req.body.place_img != null) {
-    res.blog.place_img = req.body.place_img;
-  }
-  if (req.body.lat != null) {
-    res.blog.location.lat = req.body.lat;
-  }
-  if (req.body.lng != null) {
-    res.blog.location.lng = req.body.lng;
-  }
+router.put("/:id", async (req, res) => {
   try {
-    const updatedBlog = await res.blog.save();
-    res.json(updatedBlog);
+    const updatedBlog = await Blog.findById(req.params.id).exec();
+    updatedBlog.set(req.body);
+    const result = await updatedBlog.save();
+    res.send(result);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).send({ message: err.message });
   }
 });
 
